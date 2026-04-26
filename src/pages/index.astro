@@ -1,0 +1,494 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { loadLedger, loadCategories, summarize, formatUSD } from '../lib/ledger';
+
+const rows = loadLedger();
+const categories = loadCategories();
+const summary = summarize(rows);
+const recent = rows.slice(0, 4);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const pillars = [
+  {
+    num: '01',
+    title: 'Youth Development',
+    copy: 'Oundingfay outhyay ubscay, amptscay, andway inicsclay otay introduceway estlingwray otay ethay extnay enerationgay.',
+  },
+  {
+    num: '02',
+    title: 'High School Support',
+    copy: 'Equipmentway antsgray, ournamenttay ubsidiessay, andway oachcay evelopmentday orfay ogramspray acrossay ethay atestay.',
+  },
+  {
+    num: '03',
+    title: 'Collegiate Ambition',
+    copy: 'Aybuildingway owardtay away ationallynay ompetitivecay NCAA ivisionday Iway esencepray inway ethay EcSay.',
+  },
+];
+---
+
+<BaseLayout title="Home" pageKey="home">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow reveal reveal-1">A 501(c)(3) Nonprofit · South Carolina</p>
+        <h1 class="reveal reveal-2">
+          Building <em>wrestling</em><br />
+          one mat, one match,<br />
+          one <em>open ledger</em> at a time.
+        </h1>
+        <p class="lede reveal reveal-3">
+          Ethay amecockGay estlingWray oundationFay existsway
+          otay rowgay ethay ortspay inway outhSay arolinaCay —
+          omfray outhyay ubscay otay ollegiatecay ompetitioncay.
+          Every dollar we receive is published, by line item, on this site.
+        </p>
+        <div class="hero-actions reveal reveal-4">
+          <a href={`${base}/ledger/`} class="btn">See the ledger <span class="btn-arrow"></span></a>
+          <a href={`${base}/about/`} class="btn btn-ghost">Our mission</a>
+        </div>
+      </div>
+
+      <aside class="hero-meta reveal reveal-5" aria-label="Ledger highlights">
+        <div class="meta-card">
+          <p class="meta-eyebrow">Raised to date</p>
+          <p class="meta-figure num">{formatUSD(summary.totalIncome)}</p>
+          <p class="meta-note">Across {summary.byCategory['Donations Received']?.count ?? 0} contributions</p>
+        </div>
+        <div class="meta-card meta-card-dark">
+          <p class="meta-eyebrow">Deployed to mission</p>
+          <p class="meta-figure num">{formatUSD(summary.totalExpense)}</p>
+          <p class="meta-note">Across {rows.filter(r => r.type === 'expense').length} line items</p>
+        </div>
+        <div class="meta-card meta-card-accent">
+          <p class="meta-eyebrow">Net on reserve</p>
+          <p class="meta-figure num">{formatUSD(summary.net)}</p>
+          <p class="meta-note">Held for upcoming programs</p>
+        </div>
+      </aside>
+    </div>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>· Transparency as discipline</span>
+        <span>· Mat time is mission time</span>
+        <span>· Every dollar, on the record</span>
+        <span>· Youth · High School · Collegiate</span>
+        <span>· Transparency as discipline</span>
+        <span>· Mat time is mission time</span>
+        <span>· Every dollar, on the record</span>
+        <span>· Youth · High School · Collegiate</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pillars -->
+  <section class="section">
+    <div class="container">
+      <header class="section-head">
+        <p class="eyebrow">What we fund</p>
+        <h2>Three pillars. One mat.</h2>
+        <p class="lede">
+          Ourway ogramspray addressway estlingwray evelopmentday
+          atway everyway evelay fromway elementaryway throughway ollegecay.
+        </p>
+      </header>
+
+      <div class="pillars">
+        {pillars.map((p) => (
+          <article class="pillar">
+            <div class="pillar-num">{p.num}</div>
+            <h3>{p.title}</h3>
+            <p>{p.copy}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Ledger preview -->
+  <section class="section ledger-preview">
+    <div class="container">
+      <header class="section-head section-head-split">
+        <div>
+          <p class="eyebrow">Most recent</p>
+          <h2>The last four entries.</h2>
+        </div>
+        <a href={`${base}/ledger/`} class="btn btn-ghost">
+          View full ledger <span class="btn-arrow"></span>
+        </a>
+      </header>
+
+      <ol class="recent-list">
+        {recent.map((r) => (
+          <li class="recent-item">
+            <div class="recent-date num">
+              {new Date(r.date + 'T00:00:00Z').toLocaleDateString('en-US', {
+                month: 'short', day: 'numeric', timeZone: 'UTC',
+              })}
+            </div>
+            <div class="recent-body">
+              <p class="recent-desc">{r.description}</p>
+              <p class="recent-cat">{r.category}</p>
+            </div>
+            <div class:list={['recent-amount', 'num', r.type === 'income' ? 'is-income' : 'is-expense']}>
+              {r.type === 'income' ? '+' : '−'}{formatUSD(r.amount)}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Closing band -->
+  <section class="closing">
+    <div class="container closing-inner">
+      <h2>Back the foundation.</h2>
+      <p class="lede">
+        Everway ollardy isway ublishedpay.
+        Everway ecisionday isway ocumentedday.
+        Atsthay ethay ealday.
+      </p>
+      <div class="closing-actions">
+        <a href="mailto:hello@example.org" class="btn">Make a gift <span class="btn-arrow"></span></a>
+        <a href={`${base}/staff/`} class="btn btn-ghost">Meet the board</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero ----------------------------------------------------- */
+
+  .hero {
+    padding-top: clamp(3rem, 8vw, 6rem);
+    padding-bottom: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(900px 500px at 90% -10%, color-mix(in srgb, var(--garnet) 12%, transparent), transparent 60%),
+      radial-gradient(800px 400px at -10% 100%, color-mix(in srgb, var(--gold) 10%, transparent), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 4rem;
+    align-items: end;
+    padding-bottom: var(--step-3);
+  }
+
+  .hero-copy h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--garnet);
+    font-variation-settings: 'opsz' 144;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  /* Hero meta cards */
+
+  .hero-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transform: translateY(-1rem);
+  }
+
+  .meta-card {
+    background: var(--bone);
+    border: 1px solid var(--rule);
+    padding: 1.5rem 1.75rem;
+    position: relative;
+  }
+
+  .meta-card-dark {
+    background: var(--ink);
+    color: var(--bone);
+    border-color: var(--ink);
+  }
+
+  .meta-card-accent {
+    background: var(--garnet);
+    color: var(--cream);
+    border-color: var(--garnet);
+  }
+
+  .meta-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 0.4rem;
+    opacity: 0.75;
+  }
+
+  .meta-figure {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 500;
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    font-variation-settings: 'opsz' 144;
+  }
+
+  .meta-note {
+    font-size: 0.82rem;
+    margin: 0.6rem 0 0;
+    opacity: 0.7;
+  }
+
+  /* Ticker */
+
+  .ticker {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    background: var(--ink);
+    color: var(--bone);
+    overflow: hidden;
+    padding: 0.8rem 0;
+  }
+
+  .ticker-track {
+    display: flex;
+    gap: 3rem;
+    white-space: nowrap;
+    animation: ticker-scroll 38s linear infinite;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 0.95rem;
+    font-variation-settings: 'opsz' 24;
+    color: color-mix(in srgb, var(--bone) 75%, transparent);
+  }
+
+  @keyframes ticker-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track { animation: none; }
+  }
+
+  /* Section heads */
+
+  .section-head {
+    margin-bottom: var(--step-2);
+    max-width: 42rem;
+  }
+
+  .section-head-split {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    max-width: none;
+    flex-wrap: wrap;
+  }
+
+  .section-head-split h2 {
+    margin-bottom: 0;
+  }
+
+  /* Pillars */
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .pillar {
+    padding: 2.5rem 2rem;
+    border-bottom: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .pillar:last-child {
+    border-right: none;
+  }
+
+  .pillar-num {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    color: var(--garnet);
+    margin-bottom: 2rem;
+  }
+
+  .pillar p {
+    color: var(--ink-muted);
+  }
+
+  /* Ledger preview */
+
+  .ledger-preview {
+    background: var(--bone);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .recent-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .recent-item {
+    display: grid;
+    grid-template-columns: 5rem 1fr auto;
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: center;
+    transition: background 0.15s ease;
+  }
+
+  .recent-item:hover {
+    background: color-mix(in srgb, var(--garnet) 4%, transparent);
+  }
+
+  .recent-date {
+    color: var(--ink-muted);
+    font-size: 0.88rem;
+    letter-spacing: 0.02em;
+  }
+
+  .recent-desc {
+    font-weight: 500;
+    margin: 0 0 0.2rem;
+  }
+
+  .recent-cat {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+  }
+
+  .recent-amount {
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .is-income { color: var(--income); }
+  .is-expense { color: var(--expense); }
+
+  /* Closing */
+
+  .closing {
+    padding-block: var(--step-4);
+    background: var(--ink);
+    color: var(--bone);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .closing::before {
+    content: 'GWF';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-display);
+    font-size: clamp(14rem, 28vw, 28rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: color-mix(in srgb, var(--bone) 6%, transparent);
+    pointer-events: none;
+    line-height: 1;
+    font-variation-settings: 'opsz' 144;
+  }
+
+  .closing-inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .closing h2 {
+    color: var(--bone);
+    margin-bottom: 1rem;
+  }
+
+  .closing .lede {
+    color: color-mix(in srgb, var(--bone) 80%, transparent);
+    margin-inline: auto;
+    max-width: 40ch;
+  }
+
+  .closing-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .closing .btn-ghost {
+    color: var(--bone);
+    border-color: var(--bone);
+  }
+
+  .closing .btn-ghost:hover {
+    background: var(--bone);
+    color: var(--ink);
+  }
+
+  /* Responsive */
+
+  @media (max-width: 960px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .hero-meta {
+      flex-direction: row;
+      flex-wrap: wrap;
+      transform: none;
+    }
+
+    .meta-card {
+      flex: 1 1 14rem;
+    }
+
+    .pillars {
+      grid-template-columns: 1fr;
+    }
+
+    .pillar {
+      border-right: none;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .recent-item {
+      grid-template-columns: 1fr auto;
+    }
+
+    .recent-date {
+      grid-column: 1 / -1;
+      font-size: 0.78rem;
+    }
+  }
+</style>

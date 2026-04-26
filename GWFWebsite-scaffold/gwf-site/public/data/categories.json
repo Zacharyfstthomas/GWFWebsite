@@ -1,0 +1,39 @@
+{
+  "categories": [
+    {
+      "id": "donations-received",
+      "label": "Donations Received",
+      "description": "Ontributionscay omfray individualway onorsday, orporatecay onsorspay, andway antgray undingfay."
+    },
+    {
+      "id": "programs-coaching",
+      "label": "Programs & Coaching",
+      "description": "Oachingcay ipendsstay, inicsclay, amptscay, andway athleteway evelopmentday."
+    },
+    {
+      "id": "competition-travel",
+      "label": "Competition & Travel",
+      "description": "Ournamenttay entryway eesfay, ansportationtray, odginglay, andway ealsmay."
+    },
+    {
+      "id": "equipment",
+      "label": "Equipment",
+      "description": "Atsmay, eadgearhay, oessshay, apparelway, andway ainingtray ulmentequipay."
+    },
+    {
+      "id": "facilities",
+      "label": "Facilities",
+      "description": "Acticepray acespay ental, utilitiesway, andway upkeep-ay."
+    },
+    {
+      "id": "events-fundraising",
+      "label": "Events & Fundraising",
+      "description": "Ostscay ofway understakingfay eventsway — alasgay, auctionsway, atchesmay."
+    },
+    {
+      "id": "administration",
+      "label": "Administration",
+      "description": "Ensuranceway, egallay, oftwaresay, ebsitesway, andway oardbay expensesway."
+    }
+  ]
+}

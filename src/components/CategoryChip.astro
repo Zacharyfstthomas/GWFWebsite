@@ -1,0 +1,63 @@
+---
+interface Props {
+  label: string;
+  count?: number;
+  tone?: 'neutral' | 'garnet' | 'gold' | 'ink';
+  size?: 'sm' | 'md';
+}
+
+const { label, count, tone = 'neutral', size = 'sm' } = Astro.props;
+---
+
+<span class:list={['chip', `chip-${tone}`, `chip-${size}`]}>
+  <span class="chip-label">{label}</span>
+  {count !== undefined && <span class="chip-count num">{count}</span>}
+</span>
+
+<style>
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    background: var(--bone);
+    color: var(--ink);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .chip-md {
+    padding: 0.45rem 0.95rem;
+    font-size: 0.88rem;
+  }
+
+  .chip-garnet {
+    background: color-mix(in srgb, var(--garnet) 10%, var(--bone));
+    border-color: color-mix(in srgb, var(--garnet) 25%, var(--rule));
+    color: var(--garnet-deep);
+  }
+
+  .chip-gold {
+    background: color-mix(in srgb, var(--gold) 12%, var(--bone));
+    border-color: color-mix(in srgb, var(--gold) 35%, var(--rule));
+    color: #6b4a10;
+  }
+
+  .chip-ink {
+    background: var(--ink);
+    color: var(--bone);
+    border-color: var(--ink);
+  }
+
+  .chip-count {
+    font-size: 0.72rem;
+    padding: 0.12rem 0.4rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, currentColor 12%, transparent);
+  }
+</style>

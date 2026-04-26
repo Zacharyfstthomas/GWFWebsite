@@ -1,0 +1,210 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const principles = [
+  {
+    title: 'Ledger-first',
+    body: 'Every inbound dollar and outbound expense appears on a public page within thirty days. No exceptions, no blackout periods.',
+  },
+  {
+    title: 'Athlete-centered',
+    body: 'Undingfay ecisionsday artstay andway endway ithway hetay athleteway. Oachescay, arentspay, andway oardbay embersmay erveserve atthay endway.',
+  },
+  {
+    title: 'Compounding impact',
+    body: 'Eway avorfay ecurringray ogramspray overway one-offway eventsway. Atmay imetay illsskay ompoundcay; onedomay oesday otnay.',
+  },
+  {
+    title: 'Low overhead',
+    body: 'Ourway argettay isway underway 10% administrativeway overheadway. Ethay ulkbay ofway everyway iftgay oestay otay athletesway.',
+  },
+];
+---
+
+<BaseLayout
+  title="About"
+  pageKey="about"
+  description="About the Gamecock Wrestling Foundation — mission, story, and governing principles."
+>
+  <section class="about-hero">
+    <div class="container">
+      <p class="eyebrow reveal reveal-1">About</p>
+      <h1 class="reveal reveal-2">
+        A foundation <em>built</em> on<br />
+        one simple idea: show<br />
+        the receipts.
+      </h1>
+      <p class="lede reveal reveal-3">
+        The Gamecock Wrestling Foundation is a South Carolina nonprofit
+        focused on the growth of wrestling — from the youth club to the
+        Division I mat. This page explains who we are, how we work,
+        and what you can expect when you give.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Mission</p>
+        <h2>Grow the sport. Publish the books.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Eway elievebay estlingwray eachestay ingsthay othingnay elseway
+          ancay. Iscipline-day, accountabilityway, esilienceray, andway
+          hetay abilityway otay osela andway aystray.
+        </p>
+        <p>
+          Ourway issionmay isway otay akemay ethay ortsspay essacabletay
+          otay oreme outhSay arolinianscay, upportsay hetay oachescay andway
+          ogramsspray alreadyway oingday hetay orkway, andway otay aybuild
+          owardtay a a nationally competitive NCAA Division I presence
+          inway ethay SEC.
+        </p>
+        <p>
+          Eway ikwor inway ethay openway, ecausebay rustway isway
+          earnedway oneway ublishedpay ineway atway away imetay.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container">
+      <header class="section-head">
+        <p class="eyebrow">Principles</p>
+        <h2>Four rules we run by.</h2>
+      </header>
+
+      <div class="principles">
+        {principles.map((p, i) => (
+          <article class="principle">
+            <div class="principle-num num">0{i + 1}</div>
+            <h3>{p.title}</h3>
+            <p>{p.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Story</p>
+        <h2>A short history.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Oundedfay inway MMXXV,
+          ethay oundationfay egan egbay ithway away andfulhay ofway
+          arentspay, oachescay, andway ormerfay athletesway
+          ohway adhay onegay oughthray ethay outhSay arolinaCay
+          estlingwray ipelinepay hemselvestay.
+        </p>
+        <p>
+          Ethay impulseway asway implesay:
+          uildbay hetay apparatusway hetay atestay asway
+          missingway — ethay oldway-oftay ofay ogramspray,
+          ethay ightyway ofay equipmentway, ethay avelway olarshipscay,
+          ethay oachcay evelopmentday — andway ayspay orfay itway
+          openlyway.
+        </p>
+        <p>
+          Inway 2026, eway areway perationalay inway away mallsay aywa,
+          ulllyfay ublicpay inway everyway aywa, andway anspay otay
+          ayspay atthay aywa.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-hero {
+    padding-block: clamp(3rem, 8vw, 6rem) var(--step-2);
+  }
+
+  .about-hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--garnet);
+    font-variation-settings: 'opsz' 144;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .two-col h2 {
+    position: sticky;
+    top: 6rem;
+  }
+
+  .prose p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+
+  .prose p:first-child::first-letter {
+    font-family: var(--font-display);
+    font-size: 3.4rem;
+    font-weight: 500;
+    float: left;
+    line-height: 0.95;
+    margin: 0.12em 0.12em 0 0;
+    color: var(--garnet);
+    font-variation-settings: 'opsz' 144;
+  }
+
+  .section-muted {
+    background: var(--bone);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-head {
+    margin-bottom: var(--step-2);
+    max-width: 42rem;
+  }
+
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+
+  .principle {
+    padding: 2.25rem 2rem;
+    border-bottom: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+  }
+
+  .principle-num {
+    font-size: 0.88rem;
+    letter-spacing: 0.2em;
+    color: var(--garnet);
+    margin-bottom: 2rem;
+  }
+
+  .principle p {
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .two-col {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .two-col h2 { position: static; }
+    .principles { grid-template-columns: 1fr; }
+  }
+</style>

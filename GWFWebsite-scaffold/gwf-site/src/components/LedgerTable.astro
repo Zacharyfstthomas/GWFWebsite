@@ -1,0 +1,352 @@
+---
+import type { Transaction } from '../lib/ledger';
+import { formatUSD, formatDate } from '../lib/ledger';
+
+interface Props {
+  rows: Transaction[];
+  categories: string[];
+}
+
+const { rows, categories } = Astro.props;
+---
+
+<div class="ledger" data-ledger>
+  <div class="ledger-controls">
+    <div class="ledger-filters" role="toolbar" aria-label="Filter by category">
+      <button
+        type="button"
+        class="filter-chip is-active"
+        data-filter="all"
+      >
+        All
+        <span class="filter-count num">{rows.length}</span>
+      </button>
+      {categories.map((cat) => {
+        const count = rows.filter((r) => r.category === cat).length;
+        return (
+          <button
+            type="button"
+            class="filter-chip"
+            data-filter={cat}
+          >
+            {cat}
+            <span class="filter-count num">{count}</span>
+          </button>
+        );
+      })}
+    </div>
+
+    <label class="ledger-search">
+      <span class="visually-hidden">Search transactions</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <path d="m20 20-3.5-3.5"></path>
+      </svg>
+      <input
+        type="search"
+        placeholder="Search description or notes…"
+        data-search
+        autocomplete="off"
+      />
+    </label>
+  </div>
+
+  <div class="ledger-table-wrap">
+    <table class="ledger-table">
+      <thead>
+        <tr>
+          <th scope="col" class="col-date">Date</th>
+          <th scope="col" class="col-desc">Description</th>
+          <th scope="col" class="col-cat">Category</th>
+          <th scope="col" class="col-method">Method</th>
+          <th scope="col" class="col-amt">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr
+            class="ledger-row"
+            data-category={r.category}
+            data-search-text={`${r.description} ${r.notes} ${r.category}`.toLowerCase()}
+          >
+            <td class="col-date num">{formatDate(r.date)}</td>
+            <td class="col-desc">
+              <div class="desc-main">{r.description}</div>
+              {r.notes && <div class="desc-notes">{r.notes}</div>}
+            </td>
+            <td class="col-cat">
+              <span class="cat-pill">{r.category}</span>
+            </td>
+            <td class="col-method">{r.method}</td>
+            <td class:list={['col-amt', 'num', r.type === 'income' ? 'is-income' : 'is-expense']}>
+              {r.type === 'income' ? '+' : '−'}{formatUSD(r.amount).replace('$', '$')}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <div class="ledger-empty" data-empty hidden>
+      <p>No transactions match that combination.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ledger-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .ledger-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.95rem;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    background: var(--bone);
+    color: var(--ink-soft);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .filter-chip:hover {
+    border-color: var(--garnet);
+    color: var(--garnet);
+  }
+
+  .filter-chip.is-active {
+    background: var(--ink);
+    color: var(--cream);
+    border-color: var(--ink);
+  }
+
+  .filter-chip.is-active .filter-count {
+    background: color-mix(in srgb, var(--cream) 20%, transparent);
+  }
+
+  .filter-count {
+    font-size: 0.7rem;
+    padding: 0.12rem 0.4rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--ink) 8%, transparent);
+  }
+
+  .ledger-search {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    background: var(--bone);
+    border: 1px solid var(--rule);
+    min-width: 18rem;
+    color: var(--ink-muted);
+    transition: border-color 0.15s ease;
+  }
+
+  .ledger-search:focus-within {
+    border-color: var(--garnet);
+    color: var(--ink);
+  }
+
+  .ledger-search input {
+    flex: 1;
+    background: transparent;
+    border: 0;
+    outline: none;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--ink);
+  }
+
+  /* Table --------------------------------------------------- */
+
+  .ledger-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    background: var(--bone);
+  }
+
+  .ledger-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.94rem;
+  }
+
+  .ledger-table thead {
+    background: var(--ink);
+    color: var(--cream);
+    position: sticky;
+    top: 0;
+  }
+
+  .ledger-table th {
+    text-align: left;
+    padding: 0.9rem 1rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: var(--font-body);
+  }
+
+  .ledger-table th.col-amt {
+    text-align: right;
+  }
+
+  .ledger-table td {
+    padding: 1rem;
+    border-top: 1px solid var(--rule-soft);
+    vertical-align: top;
+  }
+
+  .ledger-row {
+    transition: background 0.12s ease;
+  }
+
+  .ledger-row:hover {
+    background: color-mix(in srgb, var(--garnet) 5%, var(--bone));
+  }
+
+  .col-date {
+    white-space: nowrap;
+    color: var(--ink-muted);
+    font-size: 0.86rem;
+    min-width: 7rem;
+  }
+
+  .desc-main {
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.15rem;
+  }
+
+  .desc-notes {
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    font-style: italic;
+  }
+
+  .cat-pill {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--gold) 10%, var(--cream));
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    white-space: nowrap;
+    border: 1px solid color-mix(in srgb, var(--gold) 20%, var(--rule));
+  }
+
+  .col-method {
+    color: var(--ink-muted);
+    font-size: 0.86rem;
+    white-space: nowrap;
+  }
+
+  .col-amt {
+    text-align: right;
+    white-space: nowrap;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .is-income {
+    color: var(--income);
+  }
+
+  .is-expense {
+    color: var(--expense);
+  }
+
+  .ledger-empty {
+    padding: 3rem 1rem;
+    text-align: center;
+    color: var(--ink-muted);
+    font-style: italic;
+  }
+
+  @media (max-width: 700px) {
+    .ledger-search {
+      min-width: 100%;
+    }
+
+    .col-method {
+      display: none;
+    }
+
+    .ledger-table th.col-method {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const ledgers = document.querySelectorAll<HTMLElement>('[data-ledger]');
+
+  ledgers.forEach((ledger) => {
+    const filterButtons = ledger.querySelectorAll<HTMLButtonElement>('.filter-chip');
+    const rows = ledger.querySelectorAll<HTMLTableRowElement>('.ledger-row');
+    const search = ledger.querySelector<HTMLInputElement>('[data-search]');
+    const empty = ledger.querySelector<HTMLElement>('[data-empty]');
+
+    let activeFilter = 'all';
+    let activeQuery = '';
+
+    function applyFilters() {
+      let visible = 0;
+      rows.forEach((row) => {
+        const cat = row.dataset.category ?? '';
+        const txt = row.dataset.searchText ?? '';
+        const matchesCat = activeFilter === 'all' || cat === activeFilter;
+        const matchesSearch = activeQuery === '' || txt.includes(activeQuery);
+        const show = matchesCat && matchesSearch;
+        row.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      if (empty) {
+        if (visible === 0) {
+          empty.removeAttribute('hidden');
+        } else {
+          empty.setAttribute('hidden', '');
+        }
+      }
+    }
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        activeFilter = btn.dataset.filter ?? 'all';
+        applyFilters();
+      });
+    });
+
+    if (search) {
+      search.addEventListener('input', () => {
+        activeQuery = search.value.trim().toLowerCase();
+        applyFilters();
+      });
+    }
+  });
+</script>
