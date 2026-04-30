@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 interface Member {
   name: string;
   role: string;
-  title: string;
+  title?: string;  // Make title optional
   bio: string;
 }
 
@@ -29,11 +29,10 @@ const board: Member[] = [
   {
     name: 'Template Firstname D. Lastname',
     role: 'Director',
-	title: 'Placeholder',
     bio: 'Handles governance, compliance, and corporate records. Former collegiate wrestler.',
   },
   {
-    name: 'Kevin O\'Brian',
+    name: "Kevin O'Brian",
     role: 'Head Coach',
     title: 'Head Coach',
     bio: 'Joined in 2025 after 20 years of coaching youth and high school wrestling in the midstate.',
@@ -41,7 +40,7 @@ const board: Member[] = [
   {
     name: 'Template Firstname F. Lastname',
     role: 'Director',
-    title: 'Titles',
+    title: 'Title · Company',  // Fixed missing quote
     bio: 'Leads donor relations, major gifts, and corporate partnerships.',
   },
 ];
@@ -80,3 +79,192 @@ const staff: Member[] = [
       </p>
     </div>
   </section>
+
+  <section class="section">
+    <div class="container">
+      <header class="section-head">
+        <p class="eyebrow">Board of Directors</p>
+        <h2>Six-member governing board.</h2>
+      </header>
+
+      <div class="member-grid">
+        {board.map((m) => (
+          <article class="member">
+            <div class="member-avatar" aria-hidden="true">
+              <span>{m.name.split(' ').map((p) => p[0]).slice(0, 2).join('')}</span>
+            </div>
+            <div class="member-body">
+              <p class="member-role">{m.role}</p>
+              <h3 class="member-name">{m.name}</h3>
+              {m.title && <p class="member-title">{m.title}</p>}
+              <p class="member-bio">{m.bio}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container">
+      <header class="section-head">
+        <p class="eyebrow">Staff</p>
+        <h2>Day-to-day operations.</h2>
+      </header>
+
+      <div class="member-grid member-grid-staff">
+        {staff.map((m) => (
+          <article class="member member-staff">
+            <div class="member-avatar" aria-hidden="true">
+              <span>{m.name.split(' ').map((p) => p[0]).slice(0, 2).join('')}</span>
+            </div>
+            <div class="member-body">
+              <p class="member-role">{m.role}</p>
+              <h3 class="member-name">{m.name}</h3>
+              {m.title && <p class="member-title">{m.title}</p>}
+              <p class="member-bio">{m.bio}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container join-band">
+      <div>
+        <p class="eyebrow">Want to help?</p>
+        <h2>We&rsquo;re always looking for coaches and volunteers.</h2>
+      </div>
+      <a href="mailto:hello@example.org" class="btn">Get in touch <span class="btn-arrow"></span></a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .staff-hero {
+    padding-block: clamp(3rem, 8vw, 6rem) var(--step-2);
+  }
+
+  .staff-hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--garnet);
+    font-variation-settings: 'opsz' 144;
+  }
+
+  .section-muted {
+    background: var(--bone);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-head {
+    margin-bottom: var(--step-2);
+    max-width: 42rem;
+  }
+
+  /* Member cards */
+
+  .member-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+
+  .member-grid-staff {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .member {
+    padding: 2rem;
+    border-bottom: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    background: transparent;
+  }
+
+  .member-avatar {
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--bone);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    font-variation-settings: 'opsz' 144;
+    flex-shrink: 0;
+  }
+
+  .member:nth-child(3n + 1) .member-avatar { background: var(--garnet); }
+  .member:nth-child(3n + 2) .member-avatar { background: var(--ink); }
+  .member:nth-child(3n + 3) .member-avatar {
+    background: var(--bone);
+    color: var(--garnet);
+    border: 1px solid var(--garnet);
+  }
+
+  .member-role {
+    font-size: 0.74rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--garnet);
+    margin: 0 0 0.4rem;
+    font-weight: 600;
+  }
+
+  .member-name {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 0 0 0.3rem;
+    letter-spacing: -0.01em;
+  }
+
+  .member-title {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    font-style: italic;
+    font-family: var(--font-display);
+    margin: 0 0 0.9rem;
+    font-variation-settings: 'opsz' 24;
+  }
+
+  .member-bio {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* Join band */
+
+  .join-band {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2.5rem 3rem;
+    background: var(--bone);
+    border: 1px solid var(--rule);
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .join-band h2 {
+    margin: 0;
+    max-width: 28ch;
+  }
+
+  @media (max-width: 900px) {
+    .member-grid,
+    .member-grid-staff { grid-template-columns: 1fr; }
+    .join-band { padding: 2rem; }
+  }
+</style>

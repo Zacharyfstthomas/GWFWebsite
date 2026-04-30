@@ -68,7 +68,7 @@ export function loadLedger(): Transaction[] {
 
   const headers = parseCsvLine(lines[0]).map((h) => h.toLowerCase());
 
-  const rows: Transaction[] = lines.slice(1).map((line, idx) => {
+  const rows: Transaction[] = lines.slice(1).map((line: string, idx: number) => {
     const values = parseCsvLine(line);
     const row: Record<string, string> = {};
     headers.forEach((h, i) => {
