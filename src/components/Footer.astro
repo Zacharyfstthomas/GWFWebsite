@@ -12,6 +12,27 @@ const year = new Date().getFullYear();
           Building wrestling across South Carolina —
           one line item at a time.
         </p>
+        <div class="footer-social" aria-label="Social media">
+          <a href="https://www.instagram.com/gamecock.wrestling/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a href="https://www.facebook.com/UofSCwrestling" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/company/gamecock-wrestling-foundation/posts/?feedView=all" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+              <rect x="2" y="9" width="4" height="12"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+        </div>
       </div>
 
       <nav class="footer-nav" aria-label="Footer">
@@ -96,9 +117,39 @@ const year = new Date().getFullYear();
     color: color-mix(in srgb, var(--bone) 75%, transparent);
     font-family: var(--font-display);
     font-style: italic;
-    font-variation-settings: 'opsz' 24;
     max-width: 30ch;
     margin: 0;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .footer-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--bone) 25%, transparent);
+    color: color-mix(in srgb, var(--bone) 65%, transparent);
+    text-decoration: none;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .footer-social a:hover {
+    color: var(--gold-soft);
+    border-color: var(--gold-soft);
+    background: color-mix(in srgb, var(--gold) 10%, transparent);
+    text-decoration: none;
+  }
+
+  .footer-social svg {
+    width: 1.1rem;
+    height: 1.1rem;
   }
 
   .footer-nav h4,
