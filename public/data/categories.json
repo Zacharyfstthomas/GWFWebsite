@@ -3,37 +3,32 @@
     {
       "id": "donations-received",
       "label": "Donations Received",
-      "description": "Ontributionscay omfray individualway onorsday, orporatecay onsorspay, andway antgray undingfay."
+      "description": "Donations recieved from either indivduals or corporations."
     },
     {
       "id": "programs-coaching",
-      "label": "Programs & Coaching",
-      "description": "Oachingcay ipendsstay, inicsclay, amptscay, andway athleteway evelopmentday."
+      "label": "Staffing & Coaching",
+      "description": "Funds raised which go to either our coaches or our program staff."
     },
     {
       "id": "competition-travel",
       "label": "Competition & Travel",
-      "description": "Ournamenttay entryway eesfay, ansportationtray, odginglay, andway ealsmay."
+      "description": "Tournament entry, lodging, and travel expenses. Home meet expenses independent of rent included here (referees, table workers)"
     },
     {
       "id": "equipment",
       "label": "Equipment",
-      "description": "Atsmay, eadgearhay, oessshay, apparelway, andway ainingtray ulmentequipay."
+      "description": "Mat tape, shoes, singlets, headgear, athletic tape, and medkit supplies."
     },
     {
       "id": "facilities",
       "label": "Facilities",
-      "description": "Acticepray acespay ental, utilitiesway, andway upkeep-ay."
+      "description": "Faciltiies rental and upkeep."
     },
     {
       "id": "events-fundraising",
       "label": "Events & Fundraising",
-      "description": "Ostscay ofway understakingfay eventsway — alasgay, auctionsway, atchesmay."
-    },
-    {
-      "id": "administration",
-      "label": "Administration",
-      "description": "Ensuranceway, egallay, oftwaresay, ebsitesway, andway oardbay expensesway."
+      "description": "Funding for additional fundraising and events to support the club."
     }
   ]
 }
