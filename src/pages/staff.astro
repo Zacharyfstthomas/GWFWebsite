@@ -10,38 +10,34 @@ interface Member {
 
 const board: Member[] = [
   {
-    name: 'Template Firstname A. Lastname',
+    name: 'Zachary St. Thomas',
     role: 'Director',
-    title: 'Title · Company / Affiliation',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Chair of the foundation board since 2025.',
+    bio: 'Former club president, graduated from USC in 2024 with a Master's in Computer Science.',
   },
   {
-    name: 'Template Firstname B. Lastname',
+    name: 'Zachary Alvarado',
     role: 'Director',
-    bio: 'Lorem ipsum is a lorem content placeholder. Second-year board member with a background in finance.',
+    bio: 'Graduate from USC in 2019, has helped the foundation develop its initial charter and bank account.',
   },
   {
-    name: 'Template Firstname C. Lastname',
-    role: 'Treasurer',
-    title: 'CPA · Company',
-    bio: 'Signs off on every ledger entry. Former auditor, 15 years of nonprofit finance experience.',
+    name: 'Cole Gregory',
+    role: 'Director',
+    bio: 'Former club president, helped develop the initial charter and instrumental in networking.',
   },
   {
-    name: 'Template Firstname D. Lastname',
+    name: 'William Vaporis',
     role: 'Director',
-    bio: 'Handles governance, compliance, and corporate records. Former collegiate wrestler.',
+    bio: 'Our on the ground director in Columbia, graduated from USC in 2024.',
   },
   {
     name: "Kevin O'Brian",
     role: 'Head Coach',
-    title: 'Head Coach',
-    bio: 'Joined in 2025 after 20 years of coaching youth and high school wrestling in the midstate.',
+    bio: 'Joined in 2025 after coaching youth and high school wrestling, originally from Michigan.',
   },
   {
-    name: 'Template Firstname F. Lastname',
+    name: 'Jordan Rieblan',
     role: 'Director',
-    title: 'Title · Company',  // Fixed missing quote
-    bio: 'Leads donor relations, major gifts, and corporate partnerships.',
+    bio: '',
   },
 ];
 
@@ -62,20 +58,19 @@ const staff: Member[] = [
 ---
 
 <BaseLayout
-  title="Board and Staff"
+  title="Staff"
   pageKey="staff"
-  description="Meet the board and staff of the Gamecock Wrestling Foundation."
+  description="Meet the staff behind the Gamecock Wrestling Foundation."
 >
   <section class="staff-hero">
     <div class="container">
       <p class="eyebrow reveal reveal-1">Governance</p>
       <h1 class="reveal reveal-2">
         The <em>people</em> on<br />
-        the ledger.
+        the ledger, by our athlete's side.
       </h1>
       <p class="lede reveal reveal-3">
-        Every decision the foundation makes is made by the people below.
-        Their names appear on the events they approve.
+        Every financial decision the foundation makes is made by the people below.
       </p>
     </div>
   </section>
@@ -84,7 +79,7 @@ const staff: Member[] = [
     <div class="container">
       <header class="section-head">
         <p class="eyebrow">Board of Directors</p>
-        <h2>Six-member governing board.</h2>
+        <h2>Five-member governing board.</h2>
       </header>
 
       <div class="member-grid">
