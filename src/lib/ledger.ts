@@ -85,7 +85,7 @@ export function loadLedger(): Transaction[] {
     }
 
     return {
-      date: row.date,
+      date: normalizeDate(row.date),
       description: row.description,
       category: row.category,
       type,
@@ -152,14 +152,61 @@ export function formatUSD(n: number): string {
   });
 }
 
-export function formatDate(iso: string): string {
-  // "2026-04-10" -> "Apr 10, 2026"
-  const [y, m, d] = iso.split('-').map(Number);
-  const dt = new Date(Date.UTC(y, (m ?? 1) - 1, d ?? 1));
-  return dt.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    timeZone: 'UTC',
-  });
+const MONTHS = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+];
+
+/**
+ * Normalize a ledger date to ISO `yyyy-mm-dd` so dates sort correctly
+ * as plain strings. Accepts both ISO ("2026-03-19") and US slash
+ * format ("3/19/2026", as exported by spreadsheet tools).
+ *
+ * Anything else is returned trimmed but otherwise untouched, so bad
+ * data surfaces as itself rather than as "Invalid Date".
+ */
+export function normalizeDate(raw: string): string {
+  const s = (raw ?? '').trim();
+
+  const iso = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(s);
+  if (iso) {
+    const [, y, m, d] = iso;
+    return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+  }
+
+  const us = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(s);
+  if (us) {
+    const [, m, d, y] = us;
+    return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+  }
+
+  return s;
+}
+
+/** Split a normalized date into its parts, or null if it isn't one. */
+function dateParts(raw: string): { y: string; m: number; d: number } | null {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(normalizeDate(raw));
+  if (!m) return null;
+
+  const month = Number(m[2]);
+  if (month < 1 || month > 12) return null;
+
+  return { y: m[1], m: month, d: Number(m[3]) };
+}
+
+/**
+ * "2026-03-19" -> "Mar 19, 2026". Built by string assembly rather than
+ * Date parsing, so there is no timezone shift and no "Invalid Date".
+ */
+export function formatDate(raw: string): string {
+  const p = dateParts(raw);
+  if (!p) return (raw ?? '').trim();
+  return `${MONTHS[p.m - 1]} ${p.d}, ${p.y}`;
+}
+
+/** "2026-03-19" -> "Mar 19" — for compact listings that omit the year. */
+export function formatDateShort(raw: string): string {
+  const p = dateParts(raw);
+  if (!p) return (raw ?? '').trim();
+  return `${MONTHS[p.m - 1]} ${p.d}`;
 }

@@ -10,72 +10,52 @@ interface Member {
 
 const board: Member[] = [
   {
-    name: 'Template Firstname A. Lastname',
+    name: 'Zachary St. Thomas',
     role: 'Director',
-    title: 'Title · Company / Affiliation',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Chair of the foundation board since 2025.',
+    bio: 'Former club president, graduated from USC in 2024 with a Master\'s in Computer Science.',
   },
   {
-    name: 'Template Firstname B. Lastname',
+    name: 'Zachary Alvarado',
     role: 'Director',
-    bio: 'Lorem ipsum is a lorem content placeholder. Second-year board member with a background in finance.',
+    bio: 'Graduate from USC in 2019, has helped the foundation develop its initial charter and bank account.',
   },
   {
-    name: 'Template Firstname C. Lastname',
-    role: 'Treasurer',
-    title: 'CPA · Company',
-    bio: 'Signs off on every ledger entry. Former auditor, 15 years of nonprofit finance experience.',
+    name: 'Cole Gregory',
+    role: 'Director',
+    bio: 'Former club president, helped develop the initial charter and instrumental in networking.',
   },
   {
-    name: 'Template Firstname D. Lastname',
+    name: 'William Vaporis',
     role: 'Director',
-    bio: 'Handles governance, compliance, and corporate records. Former collegiate wrestler.',
+    bio: 'Our on the ground director in Columbia, graduated from USC in 2024.',
   },
   {
     name: "Kevin O'Brian",
     role: 'Head Coach',
-    title: 'Head Coach',
-    bio: 'Joined in 2025 after 20 years of coaching youth and high school wrestling in the midstate.',
+    bio: 'Joined in 2025 after coaching youth and high school wrestling, originally from Michigan.',
   },
   {
-    name: 'Template Firstname F. Lastname',
+    name: 'Jordan Rieblan',
     role: 'Director',
-    title: 'Title · Company',  // Fixed missing quote
-    bio: 'Leads donor relations, major gifts, and corporate partnerships.',
-  },
-];
-
-const staff: Member[] = [
-  {
-    name: 'Template Firstname G. Lastname',
-    role: 'Executive Director',
-    title: 'Full-time',
-    bio: 'Leads the day-to-day operations. Former Division I athlete and nonprofit executive.',
-  },
-  {
-    name: 'Template Firstname H. Lastname',
-    role: 'Operations Manager',
-    title: 'Part-time',
-    bio: 'Manages events, volunteers, and logistics for foundation programs.',
+    bio: '',
   },
 ];
 ---
 
 <BaseLayout
-  title="Board and Staff"
+  title="Staff"
   pageKey="staff"
-  description="Meet the board and staff of the Gamecock Wrestling Foundation."
+  description="Meet the staff behind the Gamecock Wrestling Foundation."
 >
   <section class="staff-hero">
     <div class="container">
       <p class="eyebrow reveal reveal-1">Governance</p>
       <h1 class="reveal reveal-2">
         The <em>people</em> on<br />
-        the ledger.
+        the ledger, by our athlete's side.
       </h1>
       <p class="lede reveal reveal-3">
-        Every decision the foundation makes is made by the people below.
-        Their names appear on the events they approve.
+        Every financial decision the foundation makes is made by the people below.
       </p>
     </div>
   </section>
@@ -84,7 +64,7 @@ const staff: Member[] = [
     <div class="container">
       <header class="section-head">
         <p class="eyebrow">Board of Directors</p>
-        <h2>Six-member governing board.</h2>
+        <h2>Five-member governing board.</h2>
       </header>
 
       <div class="member-grid">
@@ -105,40 +85,6 @@ const staff: Member[] = [
     </div>
   </section>
 
-  <section class="section section-muted">
-    <div class="container">
-      <header class="section-head">
-        <p class="eyebrow">Staff</p>
-        <h2>Day-to-day operations.</h2>
-      </header>
-
-      <div class="member-grid member-grid-staff">
-        {staff.map((m) => (
-          <article class="member member-staff">
-            <div class="member-avatar" aria-hidden="true">
-              <span>{m.name.split(' ').map((p) => p[0]).slice(0, 2).join('')}</span>
-            </div>
-            <div class="member-body">
-              <p class="member-role">{m.role}</p>
-              <h3 class="member-name">{m.name}</h3>
-              {m.title && <p class="member-title">{m.title}</p>}
-              <p class="member-bio">{m.bio}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container join-band">
-      <div>
-        <p class="eyebrow">Want to help?</p>
-        <h2>We&rsquo;re always looking for coaches and volunteers.</h2>
-      </div>
-      <a href="mailto:hello@example.org" class="btn">Get in touch <span class="btn-arrow"></span></a>
-    </div>
-  </section>
 </BaseLayout>
 
 <style>
@@ -151,12 +97,6 @@ const staff: Member[] = [
     font-weight: 400;
     color: var(--garnet);
     font-variation-settings: 'opsz' 144;
-  }
-
-  .section-muted {
-    background: var(--bone);
-    border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
   }
 
   .section-head {
@@ -172,10 +112,6 @@ const staff: Member[] = [
     gap: 0;
     border-top: 1px solid var(--rule);
     border-left: 1px solid var(--rule);
-  }
-
-  .member-grid-staff {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .member {
@@ -244,27 +180,7 @@ const staff: Member[] = [
     margin: 0;
   }
 
-  /* Join band */
-
-  .join-band {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2.5rem 3rem;
-    background: var(--bone);
-    border: 1px solid var(--rule);
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .join-band h2 {
-    margin: 0;
-    max-width: 28ch;
-  }
-
   @media (max-width: 900px) {
-    .member-grid,
-    .member-grid-staff { grid-template-columns: 1fr; }
-    .join-band { padding: 2rem; }
+    .member-grid { grid-template-columns: 1fr; }
   }
 </style>
