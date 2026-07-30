@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { loadLedger, summarize, formatUSD } from '../lib/ledger';
+import { loadLedger, summarize, formatUSD, formatDateShort } from '../lib/ledger';
 
 const rows = loadLedger();
 const summary = summarize(rows);
@@ -119,11 +119,7 @@ const pillars = [
       <ol class="recent-list">
         {recent.map((r) => (
           <li class="recent-item">
-            <div class="recent-date num">
-              {new Date(r.date + 'T00:00:00Z').toLocaleDateString('en-US', {
-                month: 'short', day: 'numeric', timeZone: 'UTC',
-              })}
-            </div>
+            <div class="recent-date num">{formatDateShort(r.date)}</div>
             <div class="recent-body">
               <p class="recent-desc">{r.description}</p>
               <p class="recent-cat">{r.category}</p>
