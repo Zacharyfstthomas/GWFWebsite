@@ -2,6 +2,9 @@
 dist/
 .astro/
 
+# agent worktrees — local scratch checkouts, not part of the project
+.claude/worktrees/
+
 # dependencies
 node_modules/
 
