@@ -3,7 +3,7 @@
     {
       "id": "donations-received",
       "label": "Donations Received",
-      "description": "Donations recieved from either indivduals or corporations."
+      "description": "Donations received from either individuals or corporations."
     },
     {
       "id": "programs-coaching",
@@ -23,7 +23,7 @@
     {
       "id": "facilities",
       "label": "Facilities",
-      "description": "Faciltiies rental and upkeep."
+      "description": "Facilities rental and upkeep."
     },
     {
       "id": "events-fundraising",
