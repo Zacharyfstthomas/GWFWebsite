@@ -46,7 +46,7 @@ const principles = [
         <p class="eyebrow">Mission</p>
         <h2>Grow the sport</h2>
       </div>
-      <div class="prose">
+      <div class="prose prose-plain">
         <p>
           Student Athlete Success
         </p>
@@ -131,7 +131,7 @@ const principles = [
     color: var(--ink-soft);
   }
 
-  .prose p:first-child::first-letter {
+  .prose:not(.prose-plain) p:first-child::first-letter {
     font-family: var(--font-display);
     font-size: 3.4rem;
     font-weight: 500;
@@ -140,6 +140,28 @@ const principles = [
     margin: 0.12em 0.12em 0 0;
     color: var(--garnet);
     font-variation-settings: 'opsz' 144;
+  }
+
+  /* Mission statements — short declarative lines, so they get keylines
+     rather than the drop cap, which needs a multi-line paragraph to sit in. */
+
+  .prose-plain p {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2vw, 1.65rem);
+    line-height: 1.3;
+    color: var(--ink);
+    margin: 0;
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--rule);
+    max-width: none;
+  }
+
+  .prose-plain p:first-child {
+    padding-top: 0;
+  }
+
+  .prose-plain p:last-child {
+    border-bottom: 0;
   }
 
   .section-muted {

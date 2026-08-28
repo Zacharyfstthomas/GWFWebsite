@@ -77,7 +77,7 @@ const board: Member[] = [
               <p class="member-role">{m.role}</p>
               <h3 class="member-name">{m.name}</h3>
               {m.title && <p class="member-title">{m.title}</p>}
-              <p class="member-bio">{m.bio}</p>
+              {m.bio && <p class="member-bio">{m.bio}</p>}
             </div>
           </article>
         ))}
