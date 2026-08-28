@@ -1,11 +1,11 @@
 import { defineConfig } from 'astro/config';
 
-// If you later buy a custom domain, set `site` to it and remove `base`.
-// For a user/project page at https://zacharyfstthomas.github.io/GWFWebsite/
-// we need site + base so links + asset URLs resolve correctly.
+// Served from the root of a custom domain, so no `base` is needed.
+// DNS sits behind Cloudflare's proxy in front of GitHub Pages; the
+// CNAME file in public/ is what keeps Pages bound to the domain
+// across deploys.
 export default defineConfig({
-  site: 'https://zacharyfstthomas.github.io',
-  base: '/GWFWebsite',
+  site: 'https://gamecockwrestlingfoundation.org',
   trailingSlash: 'ignore',
   build: {
     format: 'directory',
