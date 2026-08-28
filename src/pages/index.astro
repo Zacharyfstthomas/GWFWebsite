@@ -103,6 +103,37 @@ const pillars = [
     </div>
   </section>
 
+  <!-- Donate -->
+  <section class="section donate">
+    <div class="container">
+      <header class="section-head">
+        <p class="eyebrow">Give</p>
+        <h2>Make a donation.</h2>
+        <p class="lede">
+          Give securely through the form below. Every gift you make appears
+          on the public ledger, line by line.
+        </p>
+      </header>
+
+      <div class="donate-embed">
+        <iframe
+          title="Gamecock Wrestling Foundation donation form, powered by Zeffy"
+          src="https://www.zeffy.com/embed/donation-form/gamecock-wrestling-2025-2026-donations"
+          loading="lazy"
+          allow="payment"
+        ></iframe>
+      </div>
+
+      <p class="donate-fallback">
+        Form not loading? <a
+          href="https://www.zeffy.com/en-US/donation-form/gamecock-wrestling-2025-2026-donations"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Open the donation form in a new tab</a>.
+      </p>
+    </div>
+  </section>
+
   <!-- Ledger preview -->
   <section class="section ledger-preview">
     <div class="container">
@@ -329,6 +360,37 @@ const pillars = [
 
   .pillar p {
     color: var(--ink-muted);
+  }
+
+  /* Donate embed */
+
+  .donate {
+    border-top: 1px solid var(--rule);
+  }
+
+  .donate-embed {
+    position: relative;
+    width: 100%;
+    height: clamp(40rem, 85vh, 56rem);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bone);
+  }
+
+  .donate-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .donate-fallback {
+    margin: 1rem 0 0;
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+    font-style: italic;
   }
 
   /* Ledger preview */
